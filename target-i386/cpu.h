@@ -223,6 +223,9 @@
 #define CR4_OSXSAVE_MASK (1U << 18)
 #define CR4_SMEP_MASK   (1U << 20)
 #define CR4_SMAP_MASK   (1U << 21)
+/* CR4.SEE value is not specified in SGX document, so I'm assuming this value
+for now, which is the next available number, so seems reasonable */
+#define CR4_SEE         (1U << 22)
 
 #define DR6_BD          (1 << 13)
 #define DR6_BS          (1 << 14)
@@ -405,6 +408,15 @@ typedef enum FeatureWord {
     FEAT_1_EDX,         /* CPUID[1].EDX */
     FEAT_1_ECX,         /* CPUID[1].ECX */
     FEAT_7_0_EBX,       /* CPUID[EAX=7,ECX=0].EBX */
+    FEAT_12_0_EAX,      /* CPUID[EAX=12H,ECX=0].EAX  - for SGX */
+    FEAT_12_1_EAX,      /* CPUID[EAX=12H,ECX=1].EAX  - for SGX */
+    FEAT_12_1_EBX,      /* CPUID[EAX=12H,ECX=1].EBX  - for SGX */
+    FEAT_12_1_ECX,      /* CPUID[EAX=12H,ECX=1].ECX  - for SGX */
+    FEAT_12_1_EDX,      /* CPUID[EAX=12H,ECX=1].EDX  - for SGX */
+    FEAT_12_X_EAX,      /* CPUID[EAX=12H,ECX>1].EAX  - for SGX */
+    FEAT_12_X_EBX,      /* CPUID[EAX=12H,ECX>1].EBX  - for SGX */
+    FEAT_12_X_ECX,      /* CPUID[EAX=12H,ECX>1].ECX  - for SGX */
+    FEAT_12_X_EDX,      /* CPUID[EAX=12H,ECX>1].EDX  - for SGX */
     FEAT_8000_0001_EDX, /* CPUID[8000_0001].EDX */
     FEAT_8000_0001_ECX, /* CPUID[8000_0001].ECX */
     FEAT_8000_0007_EDX, /* CPUID[8000_0007].EDX */
@@ -554,6 +566,7 @@ typedef uint32_t FeatureWordArray[FEATURE_WORDS];
 #define CPUID_SVM_PFTHRESHOLD  (1U << 12)
 
 #define CPUID_7_0_EBX_FSGSBASE (1U << 0)
+#define CPUID_7_0_EBX_SGX      (1U << 2)
 #define CPUID_7_0_EBX_BMI1     (1U << 3)
 #define CPUID_7_0_EBX_HLE      (1U << 4)
 #define CPUID_7_0_EBX_AVX2     (1U << 5)
